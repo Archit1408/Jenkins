@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    app.kubernetes.io/name: myapp
+spec:
+  containers:
+  - name: myapp1
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args: ["echo Hello from writer > /data/message.txt && sleep 3600"]
+    volumeMounts:
+      - name: shared-data
+        mountPath: /data
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+
+  
+  - name: myapp2
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args: ["sleep 5 && cat /data/message.txt && sleep 3600"]
+    volumeMounts:
+      - name: shared-data
+        mountPath: /data
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+   
+  volumes:
+    - name: shared-data
+      hostPath:
+        path: /mnt/data/
+        type: Directory
