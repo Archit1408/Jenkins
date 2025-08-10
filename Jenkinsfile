@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Clone') {
       steps {
-        git 'https://github.com/octocat/Hello-World.git'
+        git 'https://github.com/Archit1408/Jenkins.git'
       }
     }
     stage('Build') {
